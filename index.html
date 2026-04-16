@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>BODYSCAN — Análise Corporal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo-mark">⬡</div>
+      <div class="logo-text">
+        <span class="logo-title">BODYSCAN</span>
+        <span class="logo-sub">SISTEMA DE ANÁLISE CORPORAL v1.0</span>
+      </div>
+      <div class="status-indicator" id="statusIndicator">
+        <span class="status-dot"></span>
+        <span class="status-label" id="statusLabel">AGUARDANDO</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════════ -->
+
+  <main class="app-main">
+
+```
+<!-- PAINEL LATERAL: DADOS DO USUÁRIO -->
+<aside class="panel panel-data">
+  <div class="panel-header">
+    <span class="panel-tag">01</span>
+    <h2 class="panel-title">DADOS PESSOAIS</h2>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label" for="heightInput">
+      ALTURA <span class="unit">(cm)</span>
+    </label>
+    <div class="input-wrapper">
+      <input
+        type="number"
+        id="heightInput"
+        class="input-field"
+        placeholder="175"
+        min="100"
+        max="250"
+        inputmode="numeric"
+      />
+      <span class="input-unit">CM</span>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label" for="weightInput">
+      PESO <span class="unit">(kg) — opcional</span>
+    </label>
+    <div class="input-wrapper">
+      <input
+        type="number"
+        id="weightInput"
+        class="input-field"
+        placeholder="70"
+        min="30"
+        max="300"
+        inputmode="numeric"
+      />
+      <span class="input-unit">KG</span>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label">SEXO BIOLÓGICO</label>
+    <div class="toggle-group">
+      <button class="toggle-btn active" id="btnMale" data-sex="male">♂ MASCULINO</button>
+      <button class="toggle-btn" id="btnFemale" data-sex="female">♀ FEMININO</button>
+    </div>
+  </div>
+
+  <!-- CHECKLIST DE STATUS -->
+  <div class="checklist">
+    <div class="check-item" id="checkHeight">
+      <span class="check-icon">○</span>
+      <span class="check-text">Altura informada</span>
+    </div>
+    <div class="check-item" id="checkFront">
+      <span class="check-icon">○</span>
+      <span class="check-text">Foto frontal capturada</span>
+    </div>
+    <div class="check-item" id="checkSide">
+      <span class="check-icon">○</span>
+      <span class="check-text">Foto lateral capturada</span>
+    </div>
+  </div>
+
+  <!-- BOTÃO PROCESSAR -->
+  <button class="btn-process" id="btnProcess" disabled>
+    <span class="btn-icon">◈</span>
+    <span>PROCESSAR ANÁLISE</span>
+    <div class="btn-loader" id="btnLoader"></div>
+  </button>
+</aside>
+
+<!-- PAINEL CENTRAL: CÂMERA -->
+<section class="panel panel-camera">
+  <div class="panel-header">
+    <span class="panel-tag">02</span>
+    <h2 class="panel-title">CAPTURA DE IMAGEM</h2>
+    <div class="camera-mode-tabs">
+      <button class="mode-tab active" id="tabFront" data-mode="front">FRONTAL</button>
+      <button class="mode-tab" id="tabSide" data-mode="side">LATERAL</button>
+    </div>
+  </div>
+
+  <!-- VIEWPORT DA CÂMERA -->
+  <div class="camera-viewport" id="cameraViewport">
+
+    <!-- Vídeo ao vivo -->
+    <video id="videoFeed" autoplay playsinline muted></video>
+
+    <!-- Canvas para captura (oculto) -->
+    <canvas id="captureCanvas" style="display:none;"></canvas>
+
+    <!-- Overlay de enquadramento (Fase 3) -->
+    <div class="body-overlay" id="bodyOverlay">
+      <div class="overlay-frame">
+        <div class="frame-corner tl"></div>
+        <div class="frame-corner tr"></div>
+        <div class="frame-corner bl"></div>
+        <div class="frame-corner br"></div>
+        <div class="body-silhouette" id="bodySilhouette"></div>
+      </div>
+      <div class="overlay-guides">
+        <div class="guide-line horizontal" style="top: 15%;">
+          <span class="guide-label">TOPO DA CABEÇA</span>
+        </div>
+        <div class="guide-line horizontal" style="top: 85%;">
+          <span class="guide-label">BASE DOS PÉS</span>
+        </div>
+      </div>
+      <div class="overlay-instruction" id="overlayInstruction">
+        Posicione seu corpo dentro da moldura
+      </div>
+    </div>
+
+    <!-- Estado: sem câmera -->
+    <div class="camera-placeholder" id="cameraPlaceholder">
+      <div class="placeholder-icon">⬡</div>
+      <p class="placeholder-text">Câmera não iniciada</p>
+      <p class="placeholder-sub">Clique em "Iniciar Câmera" abaixo</p>
+    </div>
+
+    <!-- Scan line animado (decorativo) -->
+    <div class="scan-line" id="scanLine"></div>
+
+    <!-- Label do modo atual -->
+    <div class="mode-badge" id="modeBadge">
+      <span class="mode-badge-dot"></span>
+      FRONTAL
+    </div>
+  </div>
+
+  <!-- CONTROLES DA CÂMERA -->
+  <div class="camera-controls">
+    <button class="btn-camera" id="btnStartCamera">
+      <span class="btn-cam-icon">⏻</span>
+      INICIAR CÂMERA
+    </button>
+
+    <button class="btn-capture" id="btnCaptureFront" disabled>
+      <span class="capture-ring"></span>
+      CAPTURAR FRONTAL
+    </button>
+
+    <button class="btn-capture" id="btnCaptureSide" disabled>
+      <span class="capture-ring"></span>
+      CAPTURAR LATERAL
+    </button>
+
+    <button class="btn-camera btn-secondary" id="btnFlipCamera" disabled>
+      ⟳ GIRAR
+    </button>
+  </div>
+</section>
+
+<!-- PAINEL DIREITO: PREVIEWS + RESULTADOS -->
+<aside class="panel panel-results">
+  <div class="panel-header">
+    <span class="panel-tag">03</span>
+    <h2 class="panel-title">CAPTURAS & RESULTADOS</h2>
+  </div>
+
+  <!-- PREVIEWS DAS FOTOS -->
+  <div class="previews-grid">
+    <div class="preview-card" id="previewFrontCard">
+      <div class="preview-label">FRONTAL</div>
+      <div class="preview-frame" id="previewFrontFrame">
+        <canvas id="previewFrontCanvas" class="preview-canvas"></canvas>
+        <div class="preview-empty" id="previewFrontEmpty">
+          <span>SEM IMAGEM</span>
+        </div>
+      </div>
+      <div class="preview-status" id="previewFrontStatus">Aguardando captura</div>
+    </div>
+
+    <div class="preview-card" id="previewSideCard">
+      <div class="preview-label">LATERAL</div>
+      <div class="preview-frame" id="previewSideFrame">
+        <canvas id="previewSideCanvas" class="preview-canvas"></canvas>
+        <div class="preview-empty" id="previewSideEmpty">
+          <span>SEM IMAGEM</span>
+        </div>
+      </div>
+      <div class="preview-status" id="previewSideStatus">Aguardando captura</div>
+    </div>
+  </div>
+
+  <!-- DIVISOR -->
+  <div class="section-divider">
+    <span>RESULTADOS DA ANÁLISE</span>
+  </div>
+
+  <!-- RESULTADOS (ocultos até processar) -->
+  <div class="results-panel" id="resultsPanel">
+    <div class="results-placeholder" id="resultsPlaceholder">
+      <div class="placeholder-icon small">◈</div>
+      <p>Execute a análise para ver os resultados</p>
+    </div>
+
+    <div class="results-grid" id="resultsGrid" style="display:none;">
+
+      <div class="result-card" data-metric="waist">
+        <div class="result-icon">◌</div>
+        <div class="result-value" id="resultWaist">—</div>
+        <div class="result-unit">cm</div>
+        <div class="result-label">CINTURA</div>
+      </div>
+
+      <div class="result-card" data-metric="chest">
+        <div class="result-icon">◌</div>
+        <div class="result-value" id="resultChest">—</div>
+        <div class="result-unit">cm</div>
+        <div class="result-label">PEITO</div>
+      </div>
+
+      <div class="result-card" data-metric="hip">
+        <div class="result-icon">◌</div>
+        <div class="result-value" id="resultHip">—</div>
+        <div class="result-unit">cm</div>
+        <div class="result-label">QUADRIL</div>
+      </div>
+
+      <div class="result-card" data-metric="neck">
+        <div class="result-icon">◌</div>
+        <div class="result-value" id="resultNeck">—</div>
+        <div class="result-unit">cm</div>
+        <div class="result-label">PESCOÇO</div>
+      </div>
+
+      <div class="result-card highlight" data-metric="bodyfat">
+        <div class="result-icon">◈</div>
+        <div class="result-value" id="resultBodyfat">—</div>
+        <div class="result-unit">%</div>
+        <div class="result-label">GORDURA CORPORAL</div>
+      </div>
+
+      <div class="result-card highlight" data-metric="leanmass">
+        <div class="result-icon">◈</div>
+        <div class="result-value" id="resultLeanmass">—</div>
+        <div class="result-unit">kg</div>
+        <div class="result-label">MASSA MAGRA</div>
+      </div>
+
+    </div>
+
+    <!-- BARRA DE PROGRESSO DO PROCESSAMENTO -->
+    <div class="processing-progress" id="processingProgress" style="display:none;">
+      <div class="progress-steps">
+        <div class="progress-step" id="step1">
+          <div class="step-dot"></div>
+          <span>Carregando modelos de IA</span>
+        </div>
+        <div class="progress-step" id="step2">
+          <div class="step-dot"></div>
+          <span>Detectando pose corporal</span>
+        </div>
+        <div class="progress-step" id="step3">
+          <div class="step-dot"></div>
+          <span>Segmentando corpo</span>
+        </div>
+        <div class="progress-step" id="step4">
+          <div class="step-dot"></div>
+          <span>Calculando medidas</span>
+        </div>
+        <div class="progress-step" id="step5">
+          <div class="step-dot"></div>
+          <span>Estimando composição</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</aside>
+```
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       TOAST / NOTIFICAÇÕES
+  ═══════════════════════════════════════════ -->
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ══════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════ -->
+
+  <script src="measureUtils.js"></script>
+
+  <script src="bodyProcessor.js"></script>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
