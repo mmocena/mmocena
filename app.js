@@ -418,7 +418,7 @@ showToast('Análise concluída com sucesso!', 'success');
 } catch (err) {
 console.error('Erro no processamento:', err);
 setStatus('ERRO NO PROCESSAMENTO', 'error');
-showToast(`Erro: ${err.message}`, 'error');
+showToast('Erro: ' + err.message, 'error');
 UI.resultsPlaceholder.style.display = 'flex';
 UI.processingProgress.style.display = 'none';
 } finally {
