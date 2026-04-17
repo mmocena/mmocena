@@ -5,7 +5,7 @@
 - Fases implementadas: 6 (escala), 7 (medidas), 8 (circunferência), 9 (gordura)
   */
 
-‘use strict’;
+'use strict';
 
 const MeasureUtils = (() => {
 
@@ -285,7 +285,7 @@ Método: Marinha dos EUA (US Navy Method)
 - 
 - @param {object} measures - { waist, hip, neck }  em cm
 - @param {number} height   - Altura em cm
-- @param {string} sex      - ‘male’ | ‘female’
+- @param {string} sex      - 'male' | 'female'
 - @returns {number}        - Percentual de gordura (%)
   */
   function calcBodyFatNavy(measures, height, sex) {
