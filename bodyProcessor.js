@@ -86,35 +86,24 @@ return {
 LAZY LOAD DOS MODELOS
  */
 async function loadModels() {
-// Carrega TensorFlow.js + modelos somente quando necessário
-await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js');
+  await tf.setBackend("webgl");
+  await tf.ready();
 
- 
-// Forçar backend WebGL para performance (Fase 12)
-await tf.setBackend('webgl');
-await tf.ready();
+  if (!_bodyPixModel) {
+    _bodyPixModel = await bodyPix.load({
+      architecture: "MobileNetV1",
+      outputStride: 16,
+      multiplier: 0.75,
+      quantBytes: 2
+    });
+  }
 
-// Carregar BodyPix
-if (!_bodyPixModel) {
-  await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0/dist/body-pix.min.js');
-  _bodyPixModel = await bodyPix.load({
-    architecture:       'MobileNetV1',
-    outputStride:       16,
-    multiplier:         0.75,
-    quantBytes:         2,
-  });
-}
-
-// Carregar MediaPipe Pose Detection
-if (!_poseDetector) {
-  await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.3/dist/pose-detection.min.js');
-  _poseDetector = await poseDetection.createDetector(
-    poseDetection.SupportedModels.MoveNet,
-    { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
-  );
-}
- 
-
+  if (!_poseDetector) {
+    _poseDetector = await poseDetection.createDetector(
+      poseDetection.SupportedModels.MoveNet,
+      { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
+    );
+  }
 }
 
 /* 
@@ -196,20 +185,6 @@ const img = new Image();
 img.onload  = () => resolve(img);
 img.onerror = () => reject(new Error('Falha ao carregar imagem'));
 img.src = dataURL;
-});
-}
-
-// Carrega script externo dinamicamente
-function loadScript(src) {
-return new Promise((resolve, reject) => {
-if (document.querySelector( 'script[src="${src}"] ')) {
-return resolve(); // Já carregado
-}
-const script = document.createElement('script');
-script.src = src;
-script.onload  = resolve;
-script.onerror = () => reject(new Error( 'Falha ao carregar: ${src} '));
-document.head.appendChild(script);
 });
 }
 
