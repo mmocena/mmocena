@@ -7,9 +7,9 @@
 
 ‘use strict’;
 
-/* ══════════════════════════════════════════
+/* 
 ESTADO GLOBAL DA APLICAÇÃO
-══════════════════════════════════════════ */
+ */
 const AppState = {
 stream: null,
 facingMode: ‘user’,          // ‘user’ = frontal, ‘environment’ = traseira
@@ -25,9 +25,9 @@ cameraActive: false,
 processing: false,
 };
 
-/* ══════════════════════════════════════════
+/* 
 REFS DOS ELEMENTOS DOM
-══════════════════════════════════════════ */
+ */
 const UI = {
 // Header
 statusIndicator: document.getElementById(‘statusIndicator’),
@@ -99,18 +99,18 @@ step5: document.getElementById(‘step5’),
 toastContainer: document.getElementById(‘toastContainer’),
 };
 
-/* ══════════════════════════════════════════
+/* 
 INICIALIZAÇÃO
-══════════════════════════════════════════ */
+ */
 function init() {
 bindEvents();
 updateChecklist();
 setStatus(‘AGUARDANDO’, ‘’);
 }
 
-/* ══════════════════════════════════════════
+/* 
 BIND DE EVENTOS
-══════════════════════════════════════════ */
+ */
 function bindEvents() {
 // Inputs de dados
 UI.heightInput.addEventListener(‘input’, onHeightChange);
@@ -134,9 +134,9 @@ UI.tabSide.addEventListener(‘click’, () => setMode(‘side’));
 UI.btnProcess.addEventListener(‘click’, onProcess);
 }
 
-/* ══════════════════════════════════════════
+/* 
 HANDLERS DE INPUT
-══════════════════════════════════════════ */
+ */
 function onHeightChange() {
 const val = parseFloat(UI.heightInput.value);
 if (val >= 100 && val <= 250) {
@@ -160,9 +160,9 @@ UI.btnMale.classList.toggle(‘active’, sex === ‘male’);
 UI.btnFemale.classList.toggle(‘active’, sex === ‘female’);
 }
 
-/* ══════════════════════════════════════════
+/* 
 MODO (FRONTAL / LATERAL)
-══════════════════════════════════════════ */
+ */
 function setMode(mode) {
 AppState.currentMode = mode;
 UI.tabFront.classList.toggle(‘active’, mode === ‘front’);
@@ -173,9 +173,9 @@ UI.overlayInstruction.textContent = mode === ‘front’
 : ‘Fique de lado para a câmera (perfil direito)’;
 }
 
-/* ══════════════════════════════════════════
+/* 
 CÂMERA
-══════════════════════════════════════════ */
+ */
 async function toggleCamera() {
 if (AppState.cameraActive) {
 stopCamera();
@@ -275,9 +275,9 @@ await startCamera();
 }
 }
 
-/* ══════════════════════════════════════════
+/* 
 CAPTURA DE IMAGEM
-══════════════════════════════════════════ */
+ */
 function captureImage(mode) {
 if (!AppState.cameraActive) {
 showToast(‘Inicie a câmera primeiro’, ‘warning’);
