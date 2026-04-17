@@ -14,31 +14,31 @@
 
 const BodyProcessor = (() => {
 
-/* ══════════════════════════════
+/* 
 MODELOS (lazy-loaded)
-══════════════════════════════ */
+ */
 let _poseDetector = null;
 let _bodyPixModel = null;
 
-/* ══════════════════════════════
+/* 
 FUNÇÃO PRINCIPAL
-══════════════════════════════ */
+ */
 async function process({ frontImage, sideImage, height, weight, sex, onStep }) {
 // onStep(índice, ‘active’|‘done’) → atualiza barra de progresso na UI
 
 ```
-// ── PASSO 1: Carregar modelos de IA ──
+//  PASSO 1: Carregar modelos de IA 
 onStep(0, 'active');
 await loadModels();
 onStep(0, 'done');
 
-// ── PASSO 2: Detectar pose (frontal) ──
+//  PASSO 2: Detectar pose (frontal) 
 onStep(1, 'active');
 const frontImg = await dataURLToImage(frontImage);
 const pose     = await detectPose(frontImg);
 onStep(1, 'done');
 
-// ── PASSO 3: Segmentar corpo ──
+//  PASSO 3: Segmentar corpo 
 onStep(2, 'active');
 const frontMask = await segmentBody(frontImg);
 let sideMask    = null;
@@ -49,7 +49,7 @@ if (sideImage) {
 }
 onStep(2, 'done');
 
-// ── PASSO 4: Calcular medidas ──
+//  PASSO 4: Calcular medidas 
 onStep(3, 'active');
 const measures = MeasureUtils.extractMeasures({
   pose,
@@ -60,7 +60,7 @@ const measures = MeasureUtils.extractMeasures({
 });
 onStep(3, 'done');
 
-// ── PASSO 5: Calcular composição corporal ──
+//  PASSO 5: Calcular composição corporal 
 onStep(4, 'active');
 const composition = MeasureUtils.calcBodyComposition({
   measures,
@@ -82,9 +82,9 @@ return {
 
 }
 
-/* ══════════════════════════════
+/* 
 LAZY LOAD DOS MODELOS
-══════════════════════════════ */
+ */
 async function loadModels() {
 // Carrega TensorFlow.js + modelos somente quando necessário
 await loadScript(‘https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js’);
@@ -117,9 +117,9 @@ if (!_poseDetector) {
 
 }
 
-/* ══════════════════════════════
+/* 
 DETECÇÃO DE POSE (Fase 4)
-══════════════════════════════ */
+ */
 async function detectPose(imageElement) {
 if (!_poseDetector) {
 throw new Error(‘Modelo de pose não carregado’);
@@ -160,9 +160,9 @@ return {
 
 }
 
-/* ══════════════════════════════
+/* 
 SEGMENTAÇÃO (Fase 5)
-══════════════════════════════ */
+ */
 async function segmentBody(imageElement) {
 if (!_bodyPixModel) {
 throw new Error(‘Modelo BodyPix não carregado’);
@@ -185,9 +185,9 @@ return {
 
 }
 
-/* ══════════════════════════════
+/* 
 UTILITÁRIOS INTERNOS
-══════════════════════════════ */
+ */
 
 // Converte dataURL em HTMLImageElement
 function dataURLToImage(dataURL) {
@@ -213,9 +213,9 @@ document.head.appendChild(script);
 });
 }
 
-/* ══════════════════════════════
+/* 
 API PÚBLICA
-══════════════════════════════ */
+ */
 return { process };
 
 })();
