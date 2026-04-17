@@ -496,4 +496,5 @@ setTimeout(() => toast.remove(), 300);
 /* 
 INICIAR
  */
-document.addEventListener('DOMContentLoaded', init);
+init();
+/*document.addEventListener('DOMContentLoaded', init);*/
