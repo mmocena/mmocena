@@ -26,7 +26,7 @@ FASE 6 — ESCALA: pixels → centímetros
   let headY = null;
   let feetY = null;
 
-```
+ 
 // Topo: usar nariz como referência da cabeça
 if (pose.nose && pose.nose.score > 0.3) {
   // Cabeça real fica ~15% acima do nariz
@@ -54,7 +54,7 @@ if (heightPx < 10) {
 const scale = realHeightCm / heightPx; // cm por pixel
 
 return { scale, headY, feetY, heightPx };
-```
+ 
 
 }
 
@@ -66,7 +66,7 @@ return { scale, headY, feetY, heightPx };
   let minY = Infinity;
   let maxY = -Infinity;
 
-```
+ 
 for (let y = 0; y < mask.height; y++) {
   for (let x = 0; x < mask.width; x++) {
     if (mask.data[y * mask.width + x] === 1) {
@@ -76,7 +76,7 @@ for (let y = 0; y < mask.height; y++) {
   }
 }
 return { minY, maxY };
-```
+ 
 
 }
 
@@ -95,7 +95,7 @@ FASE 7 — LARGURA NA MÁSCARA
   const row = Math.round(y);
   if (row < 0 || row >= mask.height) return 0;
 
-```
+ 
 let minX = Infinity;
 let maxX = -Infinity;
 
@@ -107,7 +107,7 @@ for (let x = 0; x < mask.width; x++) {
 }
 
 return minX === Infinity ? 0 : maxX - minX;
-```
+ 
 
 }
 
@@ -163,7 +163,7 @@ FASE 7+8 — EXTRAÇÃO COMPLETA DE MEDIDAS
   //  1. Calcular escala 
   const { scale, headY, feetY, heightPx } = calcScale(pose, frontMask, realHeight);
 
-```
+ 
 //  2. Calcular Y de referência para cada região (em pixels) 
 // Estimar proporções corporais padrão baseadas na altura em pixels
 const torsoTop    = headY + heightPx * 0.13;  // início dos ombros (~13% do topo)
@@ -234,7 +234,7 @@ return {
   // Larguras brutas para debug
   _raw: { chestWidthCm, waistWidthCm, hipWidthCm, neckWidthCm, scale, heightPx },
 };
-```
+ 
 
 }
 
@@ -251,12 +251,12 @@ return {
   .map(name => pose.keypoints[name])
   .filter(kp => kp && kp.score > 0.3);
 
-```
+ 
 if (validKps.length === 0) return fallback;
 
 const avgY = validKps.reduce((s, kp) => s + kp.y, 0) / validKps.length;
 return avgY + avgY * offsetFraction;
-```
+ 
 
 }
 
@@ -292,7 +292,7 @@ Método: Marinha dos EUA (US Navy Method)
   const { waist, hip, neck } = measures;
   let bf;
 
-```
+ 
 if (sex === 'male') {
   // Abdômen ≈ cintura para homens
   const abdomen = waist;
@@ -303,7 +303,7 @@ if (sex === 'male') {
 
 // Limitar a valores fisiologicamente possíveis
 return Math.min(50, Math.max(3, bf));
-```
+ 
 
 }
 
@@ -314,7 +314,7 @@ return Math.min(50, Math.max(3, bf));
   function calcBodyComposition({ measures, height, weight, sex }) {
   const bodyFat = calcBodyFatNavy(measures, height, sex);
 
-```
+ 
 let leanMass = null;
 if (weight) {
   const fatMass  = (bodyFat / 100) * weight;
@@ -325,7 +325,7 @@ return {
   bodyFat:  Math.round(bodyFat * 10) / 10,
   leanMass: leanMass !== null ? Math.round(leanMass * 10) / 10 : null,
 };
-```
+ 
 
 }
 
