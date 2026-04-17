@@ -169,8 +169,8 @@ UI.tabFront.classList.toggle('active', mode === 'front');
 UI.tabSide.classList.toggle('active', mode === 'side');
 UI.modeBadge.textContent = mode === 'front' ? '● FRONTAL' : '● LATERAL';
 UI.overlayInstruction.textContent = mode === 'front'
-? 'Fique de frente para a câmera'
-: 'Fique de lado para a câmera (perfil direito)';
+    ? 'Fique de frente para a camera'
+    : 'Fique de lado para a camera (perfil direito)';
 }
 
 /* 
@@ -237,7 +237,7 @@ if (err.name === 'NotAllowedError') {
 } else if (err.name === 'NotFoundError') {
   showToast('Nenhuma câmera encontrada no dispositivo.', 'error');
 } else {
-  showToast(`Erro ao iniciar câmera: ${err.message}`, 'error');
+  showToast('Erro ao iniciar câmera: ' + err.message, 'error');
 }
 ```
 
