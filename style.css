@@ -1,11 +1,11 @@
-/* ═══════════════════════════════════════════════════════
+/* 
    BODYSCAN — SISTEMA DE ANÁLISE CORPORAL
    Estética: Industrial Científica / Dark Medical
-   ═══════════════════════════════════════════════════════ */
+    */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap');
 
-/* ═══ RESET & VARIÁVEIS ═══ */
+/*  RESET & VARIÁVEIS  */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -58,12 +58,12 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ═══ SCROLLBAR ═══ */
+/*  SCROLLBAR  */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
 ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
 
-/* ═══ HEADER ═══ */
+/*  HEADER  */
 .app-header {
   position: sticky;
   top: 0;
@@ -164,7 +164,7 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ═══ MAIN LAYOUT ═══ */
+/*  MAIN LAYOUT  */
 .app-main {
   display: grid;
   grid-template-columns: 280px 1fr 320px;
@@ -173,7 +173,7 @@ html, body {
   background: var(--border);
 }
 
-/* ═══ PAINÉIS ═══ */
+/*  PAINÉIS  */
 .panel {
   background: var(--bg-panel);
   padding: 20px;
@@ -212,7 +212,7 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ═══ INPUTS ═══ */
+/*  INPUTS  */
 .input-group {
   display: flex;
   flex-direction: column;
@@ -282,7 +282,7 @@ html, body {
   pointer-events: none;
 }
 
-/* ═══ TOGGLE BUTTONS ═══ */
+/*  TOGGLE BUTTONS  */
 .toggle-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -314,7 +314,7 @@ html, body {
   color: var(--accent);
 }
 
-/* ═══ CHECKLIST ═══ */
+/*  CHECKLIST  */
 .checklist {
   display: flex;
   flex-direction: column;
@@ -348,7 +348,7 @@ html, body {
   color: var(--success);
 }
 
-/* ═══ BOTÃO PROCESSAR ═══ */
+/*  BOTÃO PROCESSAR  */
 .btn-process {
   margin-top: auto;
   position: relative;
@@ -419,7 +419,7 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* ═══ PAINEL CÂMERA ═══ */
+/*  PAINEL CÂMERA  */
 .panel-camera {
   padding: 20px;
   gap: 16px;
@@ -750,7 +750,7 @@ html, body {
   background: currentColor;
 }
 
-/* ═══ PAINEL RESULTADOS ═══ */
+/*  PAINEL RESULTADOS  */
 .panel-results {
   gap: 12px;
 }
@@ -987,7 +987,7 @@ html, body {
   animation: none;
 }
 
-/* ═══ TOAST NOTIFICATIONS ═══ */
+/*  TOAST NOTIFICATIONS  */
 .toast-container {
   position: fixed;
   bottom: 20px;
@@ -1036,7 +1036,7 @@ html, body {
   to { opacity: 0; transform: translateX(20px); }
 }
 
-/* ═══ FLASH DE CAPTURA ═══ */
+/*  FLASH DE CAPTURA  */
 .capture-flash {
   position: fixed;
   inset: 0;
@@ -1052,7 +1052,7 @@ html, body {
   100% { opacity: 0; }
 }
 
-/* ═══ RESPONSIVO MOBILE ═══ */
+/*  RESPONSIVO MOBILE  */
 @media (max-width: 1024px) {
   .app-main {
     grid-template-columns: 1fr;
@@ -1107,7 +1107,7 @@ html, body {
   }
 }
 
-/* ═══ UTILITÁRIOS ═══ */
+/*  UTILITÁRIOS  */
 .hidden { display: none !important; }
 .visually-hidden {
   position: absolute;
