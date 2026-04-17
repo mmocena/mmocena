@@ -191,16 +191,15 @@ UI.btnStartCamera.textContent = '⏳ AGUARDE…';
 UI.btnStartCamera.disabled = true;
 
 ```
-const constraints = {
+const stream = await navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: AppState.facingMode,
     width:  { ideal: 720 },
-    height: { ideal: 960 },
+    height: { ideal: 960 }
   },
-  audio: false,
-};
+  audio: false
+});
 
-const stream = await navigator.mediaDevices.getUserMedia(constraints);
 AppState.stream = stream;
 AppState.cameraActive = true;
 
