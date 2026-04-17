@@ -349,9 +349,9 @@ document.body.appendChild(flash);
 setTimeout(() => flash.remove(), 400);
 }
 
-/* ══════════════════════════════════════════
+/* 
 CHECKLIST / VALIDAÇÃO
-══════════════════════════════════════════ */
+ */
 function updateChecklist() {
 setCheck(UI.checkHeight, !!AppState.height);
 setCheck(UI.checkFront,  !!AppState.images.front);
@@ -366,9 +366,9 @@ el.classList.toggle(‘done’, done);
 el.querySelector(’.check-icon’).textContent = done ? ‘●’ : ‘○’;
 }
 
-/* ══════════════════════════════════════════
+/* 
 PROCESSAMENTO (chamará bodyProcessor.js)
-══════════════════════════════════════════ */
+ */
 async function onProcess() {
 if (AppState.processing) return;
 
@@ -441,9 +441,9 @@ else                      s.className = ‘progress-step’;
 });
 }
 
-/* ══════════════════════════════════════════
+/* 
 EXIBIÇÃO DE RESULTADOS
-══════════════════════════════════════════ */
+ */
 function showResults(results) {
 UI.processingProgress.style.display = ‘none’;
 UI.resultsGrid.style.display = ‘grid’;
@@ -468,18 +468,18 @@ el.closest(’.result-card’).classList.add(‘loaded’);
 });
 }
 
-/* ══════════════════════════════════════════
+/* 
 STATUS DO HEADER
-══════════════════════════════════════════ */
+ */
 function setStatus(label, type) {
 UI.statusLabel.textContent = label;
 UI.statusIndicator.className = ‘status-indicator’;
 if (type) UI.statusIndicator.classList.add(type);
 }
 
-/* ══════════════════════════════════════════
+/* 
 TOAST NOTIFICATIONS
-══════════════════════════════════════════ */
+ */
 function showToast(message, type = ‘info’) {
 const icons = { success: ‘✓’, error: ‘✕’, warning: ‘⚠’, info: ‘ℹ’ };
 const toast = document.createElement(‘div’);
@@ -493,7 +493,7 @@ setTimeout(() => toast.remove(), 300);
 }, 3500);
 }
 
-/* ══════════════════════════════════════════
+/* 
 INICIAR
-══════════════════════════════════════════ */
+ */
 document.addEventListener(‘DOMContentLoaded’, init);
