@@ -190,7 +190,7 @@ setStatus('INICIANDO CÂMERA', 'active');
 UI.btnStartCamera.textContent = '⏳ AGUARDE…';
 UI.btnStartCamera.disabled = true;
 
-'''
+ 
 const stream = await navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: AppState.facingMode,
@@ -222,7 +222,7 @@ UI.btnFlipCamera.disabled = false;
 
 setStatus('CÂMERA ATIVA', 'active');
 showToast('Câmera iniciada com sucesso', 'success');
-'''
+ 
 
 } catch (err) {
 console.error('Erro ao acessar câmera:', err);
@@ -230,7 +230,7 @@ UI.btnStartCamera.textContent = '⏻ INICIAR CÂMERA';
 UI.btnStartCamera.disabled = false;
 setStatus('ERRO', 'error');
 
-'''
+ 
 if (err.name === 'NotAllowedError') {
   showToast('Permissão de câmera negada. Habilite nas configurações do navegador.', 'error');
 } else if (err.name === 'NotFoundError') {
@@ -238,7 +238,7 @@ if (err.name === 'NotAllowedError') {
 } else {
   showToast('Erro ao iniciar câmera: ' + err.message, 'error');
 }
-'''
+ 
 
 }
 }
@@ -408,11 +408,11 @@ sex:        AppState.sex,
 onStep: updateProgressStep,
 });
 
-'''
+ 
 showResults(results);
 setStatus('ANÁLISE COMPLETA', 'success');
 showToast('Análise concluída com sucesso!', 'success');
-'''
+ 
 
 } catch (err) {
 console.error('Erro no processamento:', err);
