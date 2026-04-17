@@ -9,9 +9,9 @@
 
 const MeasureUtils = (() => {
 
-/* ══════════════════════════════════════════
+/* 
 FASE 6 — ESCALA: pixels → centímetros
-══════════════════════════════════════════ */
+ */
 
 /**
 
@@ -80,9 +80,9 @@ return { minY, maxY };
 
 }
 
-/* ══════════════════════════════════════════
+/* 
 FASE 7 — LARGURA NA MÁSCARA
-══════════════════════════════════════════ */
+ */
 
 /**
 
@@ -129,9 +129,9 @@ return minX === Infinity ? 0 : maxX - minX;
   return values[Math.floor(values.length / 2)];
   }
 
-/* ══════════════════════════════════════════
+/* 
 FASE 8 — CIRCUNFERÊNCIA (elipse)
-══════════════════════════════════════════ */
+ */
 
 /**
 
@@ -151,20 +151,20 @@ FASE 8 — CIRCUNFERÊNCIA (elipse)
   return Math.PI * (a + b) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
   }
 
-/* ══════════════════════════════════════════
+/* 
 FASE 7+8 — EXTRAÇÃO COMPLETA DE MEDIDAS
-══════════════════════════════════════════ */
+ */
 
 /**
 
 - Extrai todas as medidas corporais a partir da pose + máscaras.
   */
   function extractMeasures({ pose, frontMask, sideMask, imageHeight, realHeight }) {
-  // ── 1. Calcular escala ──
+  //  1. Calcular escala 
   const { scale, headY, feetY, heightPx } = calcScale(pose, frontMask, realHeight);
 
 ```
-// ── 2. Calcular Y de referência para cada região (em pixels) ──
+//  2. Calcular Y de referência para cada região (em pixels) 
 // Estimar proporções corporais padrão baseadas na altura em pixels
 const torsoTop    = headY + heightPx * 0.13;  // início dos ombros (~13% do topo)
 const torsoBottom = headY + heightPx * 0.54;  // final do quadril (~54%)
@@ -189,13 +189,13 @@ const refinedHip   = refineYFromKeypoints(
   pose, ['left_hip', 'right_hip'], hipY, 0.02
 );
 
-// ── 3. Larguras (em pixels) da vista frontal ──
+//  3. Larguras (em pixels) da vista frontal 
 const chestWidthPx  = getAvgWidthInRange(frontMask, refinedChest - 5,  refinedChest + 5);
 const waistWidthPx  = getAvgWidthInRange(frontMask, refinedWaist - 5,  refinedWaist + 5);
 const hipWidthPx    = getAvgWidthInRange(frontMask, refinedHip - 5,    refinedHip + 5);
 const neckWidthPx   = getAvgWidthInRange(frontMask, neckY - 3,         neckY + 3);
 
-// ── 4. Profundidades (em pixels) da vista lateral ──
+//  4. Profundidades (em pixels) da vista lateral 
 let chestDepthPx  = chestWidthPx  * 0.75; // fallback: proporção típica
 let waistDepthPx  = waistWidthPx  * 0.60;
 let hipDepthPx    = hipWidthPx    * 0.70;
@@ -209,7 +209,7 @@ if (sideMask) {
   hipDepthPx    = getAvgWidthInRange(sideMask, refinedHip   * scaleRatio - 5, refinedHip   * scaleRatio + 5) || hipDepthPx;
 }
 
-// ── 5. Converter pixels → cm ──
+//  5. Converter pixels → cm 
 const chestWidthCm  = chestWidthPx  * scale;
 const waistWidthCm  = waistWidthPx  * scale;
 const hipWidthCm    = hipWidthPx    * scale;
@@ -220,7 +220,7 @@ const waistDepthCm  = waistDepthPx  * scale;
 const hipDepthCm    = hipDepthPx    * scale;
 const neckDepthCm   = neckDepthPx   * scale;
 
-// ── 6. Calcular circunferências ──
+//  6. Calcular circunferências 
 const chestCirc  = ellipseCircumference(chestWidthCm, chestDepthCm);
 const waistCirc  = ellipseCircumference(waistWidthCm, waistDepthCm);
 const hipCirc    = ellipseCircumference(hipWidthCm,   hipDepthCm);
@@ -268,10 +268,10 @@ return avgY + avgY * offsetFraction;
   return Math.min(max, Math.max(min, value));
   }
 
-/* ══════════════════════════════════════════
+/* 
 FASE 9 — COMPOSIÇÃO CORPORAL
 Método: Marinha dos EUA (US Navy Method)
-══════════════════════════════════════════ */
+ */
 
 /**
 
@@ -329,9 +329,9 @@ return {
 
 }
 
-/* ══════════════════════════════════════════
+/* 
 API PÚBLICA
-══════════════════════════════════════════ */
+ */
 return {
 extractMeasures,
 calcBodyComposition,
