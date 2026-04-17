@@ -5,7 +5,7 @@
 - Fases implementadas: 1 (UI) + 2 (Câmera)
   */
 
-‘use strict’;
+'use strict';
 
 /* 
 ESTADO GLOBAL DA APLICAÇÃO
