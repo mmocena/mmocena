@@ -12,15 +12,15 @@ ESTADO GLOBAL DA APLICAÇÃO
  */
 const AppState = {
 stream: null,
-facingMode: ‘user’,          // ‘user’ = frontal, ‘environment’ = traseira
-currentMode: ‘front’,        // ‘front’ | ‘side’
+facingMode: 'user',          // 'user' = frontal, 'environment' = traseira
+currentMode: 'front',        // 'front' | 'side'
 images: {
 front: null,               // ImageData ou dataURL
 side: null,
 },
 height: null,
 weight: null,
-sex: ‘male’,
+sex: 'male',
 cameraActive: false,
 processing: false,
 };
@@ -30,73 +30,73 @@ REFS DOS ELEMENTOS DOM
  */
 const UI = {
 // Header
-statusIndicator: document.getElementById(‘statusIndicator’),
-statusLabel:     document.getElementById(‘statusLabel’),
+statusIndicator: document.getElementById('statusIndicator'),
+statusLabel:     document.getElementById('statusLabel'),
 
 // Inputs
-heightInput: document.getElementById(‘heightInput’),
-weightInput: document.getElementById(‘weightInput’),
-btnMale:     document.getElementById(‘btnMale’),
-btnFemale:   document.getElementById(‘btnFemale’),
+heightInput: document.getElementById('heightInput'),
+weightInput: document.getElementById('weightInput'),
+btnMale:     document.getElementById('btnMale'),
+btnFemale:   document.getElementById('btnFemale'),
 
 // Checklist
-checkHeight: document.getElementById(‘checkHeight’),
-checkFront:  document.getElementById(‘checkFront’),
-checkSide:   document.getElementById(‘checkSide’),
+checkHeight: document.getElementById('checkHeight'),
+checkFront:  document.getElementById('checkFront'),
+checkSide:   document.getElementById('checkSide'),
 
 // Botão processar
-btnProcess: document.getElementById(‘btnProcess’),
-btnLoader:  document.getElementById(‘btnLoader’),
+btnProcess: document.getElementById('btnProcess'),
+btnLoader:  document.getElementById('btnLoader'),
 
 // Câmera
-videoFeed:          document.getElementById(‘videoFeed’),
-captureCanvas:      document.getElementById(‘captureCanvas’),
-cameraViewport:     document.getElementById(‘cameraViewport’),
-cameraPlaceholder:  document.getElementById(‘cameraPlaceholder’),
-bodyOverlay:        document.getElementById(‘bodyOverlay’),
-scanLine:           document.getElementById(‘scanLine’),
-modeBadge:          document.getElementById(‘modeBadge’),
-overlayInstruction: document.getElementById(‘overlayInstruction’),
+videoFeed:          document.getElementById('videoFeed'),
+captureCanvas:      document.getElementById('captureCanvas'),
+cameraViewport:     document.getElementById('cameraViewport'),
+cameraPlaceholder:  document.getElementById('cameraPlaceholder'),
+bodyOverlay:        document.getElementById('bodyOverlay'),
+scanLine:           document.getElementById('scanLine'),
+modeBadge:          document.getElementById('modeBadge'),
+overlayInstruction: document.getElementById('overlayInstruction'),
 
-btnStartCamera:   document.getElementById(‘btnStartCamera’),
-btnCaptureFront:  document.getElementById(‘btnCaptureFront’),
-btnCaptureSide:   document.getElementById(‘btnCaptureSide’),
-btnFlipCamera:    document.getElementById(‘btnFlipCamera’),
+btnStartCamera:   document.getElementById('btnStartCamera'),
+btnCaptureFront:  document.getElementById('btnCaptureFront'),
+btnCaptureSide:   document.getElementById('btnCaptureSide'),
+btnFlipCamera:    document.getElementById('btnFlipCamera'),
 
-tabFront: document.getElementById(‘tabFront’),
-tabSide:  document.getElementById(‘tabSide’),
+tabFront: document.getElementById('tabFront'),
+tabSide:  document.getElementById('tabSide'),
 
 // Previews
-previewFrontCanvas: document.getElementById(‘previewFrontCanvas’),
-previewSideCanvas:  document.getElementById(‘previewSideCanvas’),
-previewFrontEmpty:  document.getElementById(‘previewFrontEmpty’),
-previewSideEmpty:   document.getElementById(‘previewSideEmpty’),
-previewFrontFrame:  document.getElementById(‘previewFrontFrame’),
-previewSideFrame:   document.getElementById(‘previewSideFrame’),
-previewFrontStatus: document.getElementById(‘previewFrontStatus’),
-previewSideStatus:  document.getElementById(‘previewSideStatus’),
+previewFrontCanvas: document.getElementById('previewFrontCanvas'),
+previewSideCanvas:  document.getElementById('previewSideCanvas'),
+previewFrontEmpty:  document.getElementById('previewFrontEmpty'),
+previewSideEmpty:   document.getElementById('previewSideEmpty'),
+previewFrontFrame:  document.getElementById('previewFrontFrame'),
+previewSideFrame:   document.getElementById('previewSideFrame'),
+previewFrontStatus: document.getElementById('previewFrontStatus'),
+previewSideStatus:  document.getElementById('previewSideStatus'),
 
 // Resultados
-resultsPlaceholder:   document.getElementById(‘resultsPlaceholder’),
-resultsGrid:          document.getElementById(‘resultsGrid’),
-processingProgress:   document.getElementById(‘processingProgress’),
+resultsPlaceholder:   document.getElementById('resultsPlaceholder'),
+resultsGrid:          document.getElementById('resultsGrid'),
+processingProgress:   document.getElementById('processingProgress'),
 
-resultWaist:    document.getElementById(‘resultWaist’),
-resultChest:    document.getElementById(‘resultChest’),
-resultHip:      document.getElementById(‘resultHip’),
-resultNeck:     document.getElementById(‘resultNeck’),
-resultBodyfat:  document.getElementById(‘resultBodyfat’),
-resultLeanmass: document.getElementById(‘resultLeanmass’),
+resultWaist:    document.getElementById('resultWaist'),
+resultChest:    document.getElementById('resultChest'),
+resultHip:      document.getElementById('resultHip'),
+resultNeck:     document.getElementById('resultNeck'),
+resultBodyfat:  document.getElementById('resultBodyfat'),
+resultLeanmass: document.getElementById('resultLeanmass'),
 
 // Steps de progresso
-step1: document.getElementById(‘step1’),
-step2: document.getElementById(‘step2’),
-step3: document.getElementById(‘step3’),
-step4: document.getElementById(‘step4’),
-step5: document.getElementById(‘step5’),
+step1: document.getElementById('step1'),
+step2: document.getElementById('step2'),
+step3: document.getElementById('step3'),
+step4: document.getElementById('step4'),
+step5: document.getElementById('step5'),
 
 // Toast
-toastContainer: document.getElementById(‘toastContainer’),
+toastContainer: document.getElementById('toastContainer'),
 };
 
 /* 
@@ -105,7 +105,7 @@ INICIALIZAÇÃO
 function init() {
 bindEvents();
 updateChecklist();
-setStatus(‘AGUARDANDO’, ‘’);
+setStatus('AGUARDANDO', '');
 }
 
 /* 
@@ -113,25 +113,25 @@ BIND DE EVENTOS
  */
 function bindEvents() {
 // Inputs de dados
-UI.heightInput.addEventListener(‘input’, onHeightChange);
-UI.weightInput.addEventListener(‘input’, onWeightChange);
+UI.heightInput.addEventListener('input', onHeightChange);
+UI.weightInput.addEventListener('input', onWeightChange);
 
 // Seleção de sexo
-UI.btnMale.addEventListener(‘click’, () => setSex(‘male’));
-UI.btnFemale.addEventListener(‘click’, () => setSex(‘female’));
+UI.btnMale.addEventListener('click', () => setSex('male'));
+UI.btnFemale.addEventListener('click', () => setSex('female'));
 
 // Câmera
-UI.btnStartCamera.addEventListener(‘click’, toggleCamera);
-UI.btnCaptureFront.addEventListener(‘click’, () => captureImage(‘front’));
-UI.btnCaptureSide.addEventListener(‘click’, () => captureImage(‘side’));
-UI.btnFlipCamera.addEventListener(‘click’, flipCamera);
+UI.btnStartCamera.addEventListener('click', toggleCamera);
+UI.btnCaptureFront.addEventListener('click', () => captureImage('front'));
+UI.btnCaptureSide.addEventListener('click', () => captureImage('side'));
+UI.btnFlipCamera.addEventListener('click', flipCamera);
 
 // Tabs de modo
-UI.tabFront.addEventListener(‘click’, () => setMode(‘front’));
-UI.tabSide.addEventListener(‘click’, () => setMode(‘side’));
+UI.tabFront.addEventListener('click', () => setMode('front'));
+UI.tabSide.addEventListener('click', () => setMode('side'));
 
 // Processar
-UI.btnProcess.addEventListener(‘click’, onProcess);
+UI.btnProcess.addEventListener('click', onProcess);
 }
 
 /* 
@@ -141,10 +141,10 @@ function onHeightChange() {
 const val = parseFloat(UI.heightInput.value);
 if (val >= 100 && val <= 250) {
 AppState.height = val;
-UI.heightInput.classList.add(‘valid’);
+UI.heightInput.classList.add('valid');
 } else {
 AppState.height = null;
-UI.heightInput.classList.remove(‘valid’);
+UI.heightInput.classList.remove('valid');
 }
 updateChecklist();
 }
@@ -156,8 +156,8 @@ AppState.weight = (val >= 30 && val <= 300) ? val : null;
 
 function setSex(sex) {
 AppState.sex = sex;
-UI.btnMale.classList.toggle(‘active’, sex === ‘male’);
-UI.btnFemale.classList.toggle(‘active’, sex === ‘female’);
+UI.btnMale.classList.toggle('active', sex === 'male');
+UI.btnFemale.classList.toggle('active', sex === 'female');
 }
 
 /* 
@@ -165,12 +165,12 @@ MODO (FRONTAL / LATERAL)
  */
 function setMode(mode) {
 AppState.currentMode = mode;
-UI.tabFront.classList.toggle(‘active’, mode === ‘front’);
-UI.tabSide.classList.toggle(‘active’, mode === ‘side’);
-UI.modeBadge.textContent = mode === ‘front’ ? ‘● FRONTAL’ : ‘● LATERAL’;
-UI.overlayInstruction.textContent = mode === ‘front’
-? ‘Fique de frente para a câmera’
-: ‘Fique de lado para a câmera (perfil direito)’;
+UI.tabFront.classList.toggle('active', mode === 'front');
+UI.tabSide.classList.toggle('active', mode === 'side');
+UI.modeBadge.textContent = mode === 'front' ? '● FRONTAL' : '● LATERAL';
+UI.overlayInstruction.textContent = mode === 'front'
+? 'Fique de frente para a câmera'
+: 'Fique de lado para a câmera (perfil direito)';
 }
 
 /* 
@@ -186,8 +186,8 @@ await startCamera();
 
 async function startCamera() {
 try {
-setStatus(‘INICIANDO CÂMERA’, ‘active’);
-UI.btnStartCamera.textContent = ‘⏳ AGUARDE…’;
+setStatus('INICIANDO CÂMERA', 'active');
+UI.btnStartCamera.textContent = '⏳ AGUARDE…';
 UI.btnStartCamera.disabled = true;
 
 ```
@@ -226,10 +226,10 @@ showToast('Câmera iniciada com sucesso', 'success');
 ```
 
 } catch (err) {
-console.error(‘Erro ao acessar câmera:’, err);
-UI.btnStartCamera.textContent = ‘⏻ INICIAR CÂMERA’;
+console.error('Erro ao acessar câmera:', err);
+UI.btnStartCamera.textContent = '⏻ INICIAR CÂMERA';
 UI.btnStartCamera.disabled = false;
-setStatus(‘ERRO’, ‘error’);
+setStatus('ERRO', 'error');
 
 ```
 if (err.name === 'NotAllowedError') {
@@ -252,23 +252,23 @@ AppState.stream = null;
 
 AppState.cameraActive = false;
 UI.videoFeed.srcObject = null;
-UI.videoFeed.classList.remove(‘active’);
-UI.cameraPlaceholder.classList.remove(‘hidden’);
-UI.bodyOverlay.classList.remove(‘active’);
-UI.scanLine.classList.remove(‘active’);
-UI.modeBadge.classList.remove(‘active’);
+UI.videoFeed.classList.remove('active');
+UI.cameraPlaceholder.classList.remove('hidden');
+UI.bodyOverlay.classList.remove('active');
+UI.scanLine.classList.remove('active');
+UI.modeBadge.classList.remove('active');
 
-UI.btnStartCamera.textContent = ‘⏻ INICIAR CÂMERA’;
-UI.btnStartCamera.classList.remove(‘active’);
+UI.btnStartCamera.textContent = '⏻ INICIAR CÂMERA';
+UI.btnStartCamera.classList.remove('active');
 UI.btnCaptureFront.disabled = true;
 UI.btnCaptureSide.disabled = true;
 UI.btnFlipCamera.disabled = true;
 
-setStatus(‘CÂMERA PARADA’, ‘’);
+setStatus('CÂMERA PARADA', '');
 }
 
 async function flipCamera() {
-AppState.facingMode = AppState.facingMode === ‘user’ ? ‘environment’ : ‘user’;
+AppState.facingMode = AppState.facingMode === 'user' ? 'environment' : 'user';
 if (AppState.cameraActive) {
 stopCamera();
 await startCamera();
@@ -280,7 +280,7 @@ CAPTURA DE IMAGEM
  */
 function captureImage(mode) {
 if (!AppState.cameraActive) {
-showToast(‘Inicie a câmera primeiro’, ‘warning’);
+showToast('Inicie a câmera primeiro', 'warning');
 return;
 }
 
@@ -296,11 +296,11 @@ const scale = Math.min(MAX_DIM / vw, MAX_DIM / vh, 1);
 canvas.width  = Math.round(vw * scale);
 canvas.height = Math.round(vh * scale);
 
-const ctx = canvas.getContext(‘2d’);
+const ctx = canvas.getContext('2d');
 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 // Salvar como dataURL
-const dataURL = canvas.toDataURL(‘image/jpeg’, 0.85);
+const dataURL = canvas.toDataURL('image/jpeg', 0.85);
 AppState.images[mode] = dataURL;
 
 // Mostrar preview
@@ -310,41 +310,41 @@ showPreview(mode, canvas);
 triggerCaptureFlash();
 
 // Atualizar UI
-if (mode === ‘front’) {
-UI.btnCaptureFront.classList.add(‘captured’);
-UI.btnCaptureFront.innerHTML = ‘<span class="capture-ring"></span> ✓ FRONTAL OK’;
-showToast(‘Foto frontal capturada!’, ‘success’);
+if (mode === 'front') {
+UI.btnCaptureFront.classList.add('captured');
+UI.btnCaptureFront.innerHTML = '<span class="capture-ring"></span> ✓ FRONTAL OK';
+showToast('Foto frontal capturada!', 'success');
 } else {
-UI.btnCaptureSide.classList.add(‘captured’);
-UI.btnCaptureSide.innerHTML = ‘<span class="capture-ring"></span> ✓ LATERAL OK’;
-showToast(‘Foto lateral capturada!’, ‘success’);
+UI.btnCaptureSide.classList.add('captured');
+UI.btnCaptureSide.innerHTML = '<span class="capture-ring"></span> ✓ LATERAL OK';
+showToast('Foto lateral capturada!', 'success');
 }
 
 updateChecklist();
 }
 
 function showPreview(mode, sourceCanvas) {
-const previewCanvas = mode === ‘front’ ? UI.previewFrontCanvas : UI.previewSideCanvas;
-const emptyEl       = mode === ‘front’ ? UI.previewFrontEmpty : UI.previewSideEmpty;
-const frameEl       = mode === ‘front’ ? UI.previewFrontFrame : UI.previewSideFrame;
-const statusEl      = mode === ‘front’ ? UI.previewFrontStatus : UI.previewSideStatus;
+const previewCanvas = mode === 'front' ? UI.previewFrontCanvas : UI.previewSideCanvas;
+const emptyEl       = mode === 'front' ? UI.previewFrontEmpty : UI.previewSideEmpty;
+const frameEl       = mode === 'front' ? UI.previewFrontFrame : UI.previewSideFrame;
+const statusEl      = mode === 'front' ? UI.previewFrontStatus : UI.previewSideStatus;
 
 // Copiar canvas capturado para preview
 previewCanvas.width  = sourceCanvas.width;
 previewCanvas.height = sourceCanvas.height;
-const ctx = previewCanvas.getContext(‘2d’);
+const ctx = previewCanvas.getContext('2d');
 ctx.drawImage(sourceCanvas, 0, 0);
 
-previewCanvas.classList.add(‘visible’);
-emptyEl.style.display = ‘none’;
-frameEl.classList.add(‘has-image’);
-statusEl.textContent = ‘✓ Capturada’;
-statusEl.classList.add(‘ok’);
+previewCanvas.classList.add('visible');
+emptyEl.style.display = 'none';
+frameEl.classList.add('has-image');
+statusEl.textContent = '✓ Capturada';
+statusEl.classList.add('ok');
 }
 
 function triggerCaptureFlash() {
-const flash = document.createElement(‘div’);
-flash.className = ‘capture-flash’;
+const flash = document.createElement('div');
+flash.className = 'capture-flash';
 document.body.appendChild(flash);
 setTimeout(() => flash.remove(), 400);
 }
@@ -362,8 +362,8 @@ UI.btnProcess.disabled = !allDone;
 }
 
 function setCheck(el, done) {
-el.classList.toggle(‘done’, done);
-el.querySelector(’.check-icon’).textContent = done ? ‘●’ : ‘○’;
+el.classList.toggle('done', done);
+el.querySelector('.check-icon').textContent = done ? '●' : '○';
 }
 
 /* 
@@ -374,29 +374,29 @@ if (AppState.processing) return;
 
 // Validação (Fase 11)
 if (!AppState.height) {
-showToast(‘Informe sua altura antes de processar’, ‘warning’);
+showToast('Informe sua altura antes de processar', 'warning');
 UI.heightInput.focus();
 return;
 }
 if (!AppState.images.front) {
-showToast(‘Capture a foto frontal primeiro’, ‘warning’);
+showToast('Capture a foto frontal primeiro', 'warning');
 return;
 }
 if (!AppState.images.side) {
-showToast(‘Capture a foto lateral primeiro’, ‘warning’);
+showToast('Capture a foto lateral primeiro', 'warning');
 return;
 }
 
 AppState.processing = true;
 UI.btnProcess.disabled = true;
-UI.btnProcess.classList.add(‘processing’);
+UI.btnProcess.classList.add('processing');
 
 // Mostrar painel de progresso
-UI.resultsPlaceholder.style.display = ‘none’;
-UI.resultsGrid.style.display = ‘none’;
-UI.processingProgress.style.display = ‘block’;
+UI.resultsPlaceholder.style.display = 'none';
+UI.resultsGrid.style.display = 'none';
+UI.processingProgress.style.display = 'block';
 
-setStatus(‘PROCESSANDO’, ‘active’);
+setStatus('PROCESSANDO', 'active');
 
 try {
 // Chamar o processador (bodyProcessor.js — Fases 4-10)
@@ -416,28 +416,28 @@ showToast('Análise concluída com sucesso!', 'success');
 ```
 
 } catch (err) {
-console.error(‘Erro no processamento:’, err);
-setStatus(‘ERRO NO PROCESSAMENTO’, ‘error’);
-showToast(`Erro: ${err.message}`, ‘error’);
-UI.resultsPlaceholder.style.display = ‘flex’;
-UI.processingProgress.style.display = ‘none’;
+console.error('Erro no processamento:', err);
+setStatus('ERRO NO PROCESSAMENTO', 'error');
+showToast(`Erro: ${err.message}`, 'error');
+UI.resultsPlaceholder.style.display = 'flex';
+UI.processingProgress.style.display = 'none';
 } finally {
 AppState.processing = false;
 UI.btnProcess.disabled = false;
-UI.btnProcess.classList.remove(‘processing’);
+UI.btnProcess.classList.remove('processing');
 }
 }
 
 function updateProgressStep(stepIndex, state) {
-// state: ‘active’ | ‘done’
+// state: 'active' | 'done'
 const steps = [UI.step1, UI.step2, UI.step3, UI.step4, UI.step5];
 if (stepIndex < 0 || stepIndex >= steps.length) return;
 
 // Marcar todos anteriores como done
 steps.forEach((s, i) => {
-if (i < stepIndex)        s.className = ‘progress-step done’;
+if (i < stepIndex)        s.className = 'progress-step done';
 else if (i === stepIndex) s.className = `progress-step ${state}`;
-else                      s.className = ‘progress-step’;
+else                      s.className = 'progress-step';
 });
 }
 
@@ -445,25 +445,25 @@ else                      s.className = ‘progress-step’;
 EXIBIÇÃO DE RESULTADOS
  */
 function showResults(results) {
-UI.processingProgress.style.display = ‘none’;
-UI.resultsGrid.style.display = ‘grid’;
+UI.processingProgress.style.display = 'none';
+UI.resultsGrid.style.display = 'grid';
 
 // Preencher valores com animação escalonada
 const fields = [
-{ el: UI.resultWaist,    value: results.waist,    unit: ‘cm’  },
-{ el: UI.resultChest,    value: results.chest,    unit: ‘cm’  },
-{ el: UI.resultHip,      value: results.hip,      unit: ‘cm’  },
-{ el: UI.resultNeck,     value: results.neck,     unit: ‘cm’  },
-{ el: UI.resultBodyfat,  value: results.bodyFat,  unit: ‘%’   },
-{ el: UI.resultLeanmass, value: results.leanMass, unit: ‘kg’  },
+{ el: UI.resultWaist,    value: results.waist,    unit: 'cm'  },
+{ el: UI.resultChest,    value: results.chest,    unit: 'cm'  },
+{ el: UI.resultHip,      value: results.hip,      unit: 'cm'  },
+{ el: UI.resultNeck,     value: results.neck,     unit: 'cm'  },
+{ el: UI.resultBodyfat,  value: results.bodyFat,  unit: '%'   },
+{ el: UI.resultLeanmass, value: results.leanMass, unit: 'kg'  },
 ];
 
 fields.forEach(({ el, value }, i) => {
 setTimeout(() => {
 el.textContent = value !== null && value !== undefined
-? (typeof value === ‘number’ ? value.toFixed(1) : value)
-: ‘—’;
-el.closest(’.result-card’).classList.add(‘loaded’);
+? (typeof value === 'number' ? value.toFixed(1) : value)
+: '—';
+el.closest('.result-card').classList.add('loaded');
 }, i * 120);
 });
 }
@@ -473,22 +473,22 @@ STATUS DO HEADER
  */
 function setStatus(label, type) {
 UI.statusLabel.textContent = label;
-UI.statusIndicator.className = ‘status-indicator’;
+UI.statusIndicator.className = 'status-indicator';
 if (type) UI.statusIndicator.classList.add(type);
 }
 
 /* 
 TOAST NOTIFICATIONS
  */
-function showToast(message, type = ‘info’) {
-const icons = { success: ‘✓’, error: ‘✕’, warning: ‘⚠’, info: ‘ℹ’ };
-const toast = document.createElement(‘div’);
+function showToast(message, type = 'info') {
+const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+const toast = document.createElement('div');
 toast.className = `toast ${type}`;
 toast.innerHTML = `<span class="toast-icon">${icons[type] || 'ℹ'}</span><span>${message}</span>`;
 UI.toastContainer.appendChild(toast);
 
 setTimeout(() => {
-toast.style.animation = ‘toast-out 0.3s ease forwards’;
+toast.style.animation = 'toast-out 0.3s ease forwards';
 setTimeout(() => toast.remove(), 300);
 }, 3500);
 }
@@ -496,4 +496,4 @@ setTimeout(() => toast.remove(), 300);
 /* 
 INICIAR
  */
-document.addEventListener(‘DOMContentLoaded’, init);
+document.addEventListener('DOMContentLoaded', init);
