@@ -479,17 +479,24 @@ if (type) UI.statusIndicator.classList.add(type);
 /* 
 TOAST NOTIFICATIONS
  */
-function showToast(message, type = 'info') {
-const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
-const toast = document.createElement('div');
-toast.className = 'toast ${type}';
-toast.innerHTML = '<span class="toast-icon">${icons[type] || 'ℹ'}</span><span>${message}</span>';
-UI.toastContainer.appendChild(toast);
-
-setTimeout(() => {
-toast.style.animation = 'toast-out 0.3s ease forwards';
-setTimeout(() => toast.remove(), 300);
-}, 3500);
+function showToast(message, type) {
+  if (!type) type = "info";
+  var icons = { success: "OK", error: "X", warning: "!", info: "i" };
+  var icon = icons[type] || "i";
+  var toast = document.createElement("div");
+  toast.className = "toast " + type;
+  var span1 = document.createElement("span");
+  span1.className = "toast-icon";
+  span1.textContent = icon;
+  var span2 = document.createElement("span");
+  span2.textContent = message;
+  toast.appendChild(span1);
+  toast.appendChild(span2);
+  UI.toastContainer.appendChild(toast);
+  setTimeout(function() {
+    toast.style.animation = "toast-out 0.3s ease forwards";
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3500);
 }
 
 /* 
