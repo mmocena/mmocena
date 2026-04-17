@@ -26,7 +26,7 @@ FUNÇÃO PRINCIPAL
 async function process({ frontImage, sideImage, height, weight, sex, onStep }) {
 // onStep(índice, 'active'|'done') → atualiza barra de progresso na UI
 
-```
+ 
 //  PASSO 1: Carregar modelos de IA 
 onStep(0, 'active');
 await loadModels();
@@ -78,7 +78,7 @@ return {
   bodyFat:  composition.bodyFat,
   leanMass: composition.leanMass,
 };
-```
+ 
 
 }
 
@@ -89,7 +89,7 @@ async function loadModels() {
 // Carrega TensorFlow.js + modelos somente quando necessário
 await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js');
 
-```
+ 
 // Forçar backend WebGL para performance (Fase 12)
 await tf.setBackend('webgl');
 await tf.ready();
@@ -113,7 +113,7 @@ if (!_poseDetector) {
     { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
   );
 }
-```
+ 
 
 }
 
@@ -125,7 +125,7 @@ if (!_poseDetector) {
 throw new Error('Modelo de pose não carregado');
 }
 
-```
+ 
 const poses = await _poseDetector.estimatePoses(imageElement, {
   maxPoses:         1,
   flipHorizontal:   false,
@@ -156,7 +156,7 @@ return {
   leftAnkle:    kpMap['left_ankle']    || null,
   rightAnkle:   kpMap['right_ankle']   || null,
 };
-```
+ 
 
 }
 
@@ -168,7 +168,7 @@ if (!_bodyPixModel) {
 throw new Error('Modelo BodyPix não carregado');
 }
 
-```
+ 
 const segmentation = await _bodyPixModel.segmentPerson(imageElement, {
   flipHorizontal:       false,
   internalResolution:   'medium',
@@ -181,7 +181,7 @@ return {
   width:  segmentation.width,
   height: segmentation.height,
 };
-```
+ 
 
 }
 
@@ -202,13 +202,13 @@ img.src = dataURL;
 // Carrega script externo dinamicamente
 function loadScript(src) {
 return new Promise((resolve, reject) => {
-if (document.querySelector(`script[src="${src}"]`)) {
+if (document.querySelector( 'script[src="${src}"] ')) {
 return resolve(); // Já carregado
 }
 const script = document.createElement('script');
 script.src = src;
 script.onload  = resolve;
-script.onerror = () => reject(new Error(`Falha ao carregar: ${src}`));
+script.onerror = () => reject(new Error( 'Falha ao carregar: ${src} '));
 document.head.appendChild(script);
 });
 }
