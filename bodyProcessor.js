@@ -10,7 +10,7 @@
 - - @tensorflow-models/body-pix
     */
 
-‘use strict’;
+'use strict';
 
 const BodyProcessor = (() => {
 
@@ -24,7 +24,7 @@ let _bodyPixModel = null;
 FUNÇÃO PRINCIPAL
  */
 async function process({ frontImage, sideImage, height, weight, sex, onStep }) {
-// onStep(índice, ‘active’|‘done’) → atualiza barra de progresso na UI
+// onStep(índice, 'active'|'done') → atualiza barra de progresso na UI
 
 ```
 //  PASSO 1: Carregar modelos de IA 
@@ -87,7 +87,7 @@ LAZY LOAD DOS MODELOS
  */
 async function loadModels() {
 // Carrega TensorFlow.js + modelos somente quando necessário
-await loadScript(‘https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js’);
+await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js');
 
 ```
 // Forçar backend WebGL para performance (Fase 12)
@@ -122,7 +122,7 @@ DETECÇÃO DE POSE (Fase 4)
  */
 async function detectPose(imageElement) {
 if (!_poseDetector) {
-throw new Error(‘Modelo de pose não carregado’);
+throw new Error('Modelo de pose não carregado');
 }
 
 ```
@@ -165,7 +165,7 @@ SEGMENTAÇÃO (Fase 5)
  */
 async function segmentBody(imageElement) {
 if (!_bodyPixModel) {
-throw new Error(‘Modelo BodyPix não carregado’);
+throw new Error('Modelo BodyPix não carregado');
 }
 
 ```
@@ -194,7 +194,7 @@ function dataURLToImage(dataURL) {
 return new Promise((resolve, reject) => {
 const img = new Image();
 img.onload  = () => resolve(img);
-img.onerror = () => reject(new Error(‘Falha ao carregar imagem’));
+img.onerror = () => reject(new Error('Falha ao carregar imagem'));
 img.src = dataURL;
 });
 }
@@ -205,7 +205,7 @@ return new Promise((resolve, reject) => {
 if (document.querySelector(`script[src="${src}"]`)) {
 return resolve(); // Já carregado
 }
-const script = document.createElement(‘script’);
+const script = document.createElement('script');
 script.src = src;
 script.onload  = resolve;
 script.onerror = () => reject(new Error(`Falha ao carregar: ${src}`));
